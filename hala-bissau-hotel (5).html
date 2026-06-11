@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HALA BISSAU — Luxury Coastal Hotel | Guinea-Bissau</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#262262;--gold:#f8bc1a;--sg:#fcd560;--white:#fff;--cream:#faf7f0;--dn:#1a1748;--ch:#2a2a2a;--mid:#666;--sand:#e8d5b0;--terra:#c4703a;--sage:#7a8c6e;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'Jost',sans-serif;background:#fff;color:var(--ch);overflow-x:hidden;}
+
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:80px;transition:all .4s;background:transparent;}
+header.scrolled{background:rgba(38,34,98,.97);backdrop-filter:blur(12px);height:64px;box-shadow:0 2px 30px rgba(0,0,0,.3);}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo-mark{width:46px;height:46px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--navy);flex-shrink:0;}
+.logo-name{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500;color:#fff;letter-spacing:3px;display:block;}
+.logo-sub{font-size:8px;color:var(--gold);letter-spacing:4px;text-transform:uppercase;display:block;}
+nav{display:flex;align-items:center;gap:2rem;}
+nav a{font-size:10px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.85);text-decoration:none;transition:color .3s;position:relative;}
+nav a::after{content:'';position:absolute;bottom:-4px;left:0;right:100%;height:1px;background:var(--gold);transition:right .3s;}
+nav a:hover{color:var(--gold);}nav a:hover::after{right:0;}
+.lang-btn{background:none;border:none;font-family:'Jost',sans-serif;font-size:10px;font-weight:500;letter-spacing:1.5px;color:rgba(255,255,255,.5);cursor:pointer;transition:color .3s;padding:2px 4px;}
+.lang-btn.on,.lang-btn:hover{color:var(--gold);}
+.lang-sep{color:rgba(255,255,255,.22);font-size:10px;}
+.res-trigger{background:var(--gold);color:var(--navy);padding:10px 22px;font-family:'Jost',sans-serif;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;border:none;cursor:pointer;transition:all .3s;}
+.res-trigger:hover{background:var(--sg);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+.hamburger span{display:block;width:24px;height:1.5px;background:#fff;}
+.mob-menu{display:none;position:fixed;inset:0;z-index:1500;background:var(--dn);flex-direction:column;align-items:center;justify-content:center;gap:2rem;}
+.mob-menu.open{display:flex;}
+.mob-menu a{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;color:#fff;text-decoration:none;}
+.mob-menu a:hover{color:var(--gold);}
+.mob-close{position:absolute;top:1.5rem;right:2rem;background:none;border:none;color:#fff;font-size:26px;cursor:pointer;}
+
+/* ══════════════════════════════════════════════════
+   RESERVATION DRAWER — Ritz-Carlton style
+   Hidden by default. Slides down from header on
+   "Reserve" click. Full-width luxury bar + calendar.
+══════════════════════════════════════════════════ */
+.res-drawer{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  background:var(--navy);
+  border-bottom:2px solid var(--gold);
+  transform:translateY(-100%);
+  transition:transform .5s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 8px 40px rgba(26,23,72,.5);
+}
+.res-drawer.open{transform:translateY(0);}
+
+/* Summary bar — always visible once drawer open */
+.rd-bar{
+  max-width:1300px;margin:0 auto;
+  display:flex;align-items:stretch;
+  padding-top:80px; /* clears fixed header */
+}
+.rd-field{
+  flex:1;padding:20px 26px;cursor:pointer;
+  border-right:1px solid rgba(255,255,255,.1);
+  transition:background .2s;display:flex;flex-direction:column;gap:3px;justify-content:center;
+}
+.rd-field:hover{background:rgba(255,255,255,.06);}
+.rd-label{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);}
+.rd-val{font-family:'Cormorant Garamond',serif;font-size:17px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rd-sub{font-size:10px;color:rgba(255,255,255,.4);}
+.rd-view-btn{
+  background:var(--gold);color:var(--navy);border:none;
+  padding:0 44px;font-family:'Jost',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  cursor:pointer;transition:background .3s;white-space:nowrap;flex-shrink:0;
+}
+.rd-view-btn:hover{background:var(--sg);}
+.rd-close-btn{
+  background:none;border:none;border-left:1px solid rgba(255,255,255,.1);
+  color:rgba(255,255,255,.5);font-size:20px;cursor:pointer;padding:0 20px;
+  transition:color .3s;flex-shrink:0;
+}
+.rd-close-btn:hover{color:var(--gold);}
+
+/* Expanded panels below the bar */
+.rd-panels{overflow:hidden;max-height:0;transition:max-height .45s cubic-bezier(.4,0,.2,1);}
+.rd-panels.open{max-height:600px;}
+.rd-panel{display:none;background:var(--navy);border-top:1px solid rgba(255,255,255,.08);}
+.rd-panel.active{display:block;}
+.rdp-inner{max-width:1300px;margin:0 auto;padding:2rem 2.5rem;}
+.rdp-title{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;}
+
+/* CALENDAR */
+.cal-wrap{display:flex;gap:2.5rem;align-items:flex-start;flex-wrap:wrap;}
+.cal-month{min-width:280px;}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;}
+.cal-nav{background:none;border:1px solid rgba(255,255,255,.2);color:#fff;width:30px;height:30px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .3s;}
+.cal-nav:hover{border-color:var(--gold);color:var(--gold);}
+.cal-month-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:#fff;letter-spacing:1px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.cal-dow{font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);text-align:center;padding:6px 0;}
+.cal-day{
+  aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+  font-size:12px;color:rgba(255,255,255,.75);cursor:pointer;
+  transition:all .2s;border-radius:2px;font-family:'Jost',sans-serif;
+  font-weight:400;
+}
+.cal-day:hover:not(.empty):not(.past){background:rgba(248,188,26,.25);color:#fff;}
+.cal-day.empty{pointer-events:none;}
+.cal-day.past{color:rgba(255,255,255,.2);pointer-events:none;}
+.cal-day.today{border:1px solid rgba(248,188,26,.5);color:#fff;}
+.cal-day.checkin{background:var(--gold);color:var(--navy);font-weight:700;}
+.cal-day.checkout{background:var(--gold);color:var(--navy);font-weight:700;}
+.cal-day.in-range{background:rgba(248,188,26,.18);color:#fff;}
+.cal-summary{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  padding:1.5rem;min-width:200px;align-self:flex-start;margin-top:0;
+}
+.cal-sum-row{display:flex;flex-direction:column;gap:3px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);}
+.cal-sum-row:last-child{border-bottom:none;}
+.cal-sum-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+.cal-sum-val{font-family:'Cormorant Garamond',serif;font-size:17px;color:#fff;font-weight:400;}
+.cal-sum-sub{font-size:10px;color:rgba(255,255,255,.45);}
+.cal-done{width:100%;background:var(--gold);color:var(--navy);border:none;padding:11px;font-family:'Jost',sans-serif;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;margin-top:1rem;transition:background .3s;}
+.cal-done:hover{background:var(--sg);}
+
+/* GUESTS PANEL */
+.guest-counters{display:flex;flex-direction:column;gap:1.5rem;max-width:400px;}
+.guest-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08);}
+.guest-row:last-child{border-bottom:none;}
+.guest-info-lbl{font-size:15px;color:#fff;font-weight:300;}
+.guest-info-sub{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px;}
+.g-ctrl{display:flex;align-items:center;gap:0;}
+.g-ctrl button{width:36px;height:36px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:18px;cursor:pointer;transition:all .2s;line-height:1;}
+.g-ctrl button:hover{background:rgba(248,188,26,.25);border-color:var(--gold);color:var(--gold);}
+.g-ctrl span{width:48px;text-align:center;font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff;border-top:1px solid rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.2);line-height:36px;display:block;}
+
+/* RATES PANEL */
+.rate-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:900px;}
+.rate-opt{cursor:pointer;}
+.rate-opt input{display:none;}
+.rate-card{border:1.5px solid rgba(255,255,255,.15);padding:12px 16px;transition:all .25s;background:rgba(255,255,255,.04);}
+.rate-opt input:checked+.rate-card{border-color:var(--gold);background:rgba(248,188,26,.1);box-shadow:0 0 0 1px var(--gold);}
+.rate-card:hover{border-color:rgba(248,188,26,.5);}
+.rate-card-name{font-size:12px;font-weight:600;color:#fff;}
+.rate-card-sub{font-size:10px;color:rgba(255,255,255,.5);margin-top:2px;}
+.code-input-wrap{margin-top:1.25rem;display:none;max-width:400px;}
+.code-input-wrap.show{display:block;}
+.code-input-wrap label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px;}
+.code-input-row{display:flex;gap:8px;}
+.code-input-row input{flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#fff;font-family:'Jost',sans-serif;font-size:14px;padding:10px 14px;outline:none;letter-spacing:2px;text-transform:uppercase;transition:border-color .3s;}
+.code-input-row input:focus{border-color:var(--gold);}
+.code-input-row input::placeholder{color:rgba(255,255,255,.3);}
+.code-hint{font-size:10px;color:rgba(255,255,255,.35);margin-top:5px;}
+
+/* Backdrop */
+.res-backdrop{display:none;position:fixed;inset:0;z-index:490;background:rgba(0,0,0,.4);}
+.res-backdrop.open{display:block;}
+
+/* HERO */
+#hero{height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(26,23,72,.55) 0%,rgba(26,23,72,.15) 40%,rgba(26,23,72,.6) 100%),url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1800&q=85') center/cover no-repeat;animation:hz 14s ease-in-out infinite alternate;}
+@keyframes hz{from{transform:scale(1);}to{transform:scale(1.05);}}
+.hero-content{position:relative;z-index:2;text-align:center;padding:0 2rem;max-width:900px;}
+.hero-eyebrow{font-size:10px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;opacity:0;animation:fup 1s .3s forwards;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(56px,8vw,100px);font-weight:300;line-height:.95;color:#fff;margin-bottom:.5rem;opacity:0;animation:fup 1s .5s forwards;}
+.hero-title em{font-style:italic;color:var(--gold);}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2.5vw,22px);font-weight:300;font-style:italic;color:rgba(255,255,255,.75);margin-bottom:3rem;opacity:0;animation:fup 1s .7s forwards;}
+.hero-ctas{display:flex;align-items:center;justify-content:center;gap:1.5rem;opacity:0;animation:fup 1s .9s forwards;}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fup 1s 1.2s forwards;}
+.hero-scroll span{font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.45);}
+.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--gold),transparent);animation:sp 2s ease-in-out infinite;}
+@keyframes sp{0%,100%{opacity:1;}50%{opacity:.3;}}
+@keyframes fup{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+.btn-p{background:var(--gold);color:var(--navy);padding:15px 38px;font-family:'Jost',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .3s;display:inline-block;}
+.btn-p:hover{background:var(--sg);transform:translateY(-2px);}
+.btn-o{background:transparent;color:#fff;padding:14px 38px;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;text-decoration:none;border:1px solid rgba(255,255,255,.5);cursor:pointer;transition:all .3s;display:inline-block;}
+.btn-o:hover{border-color:var(--gold);color:var(--gold);}
+
+/* SECTIONS */
+section{padding:100px 0;}
+.sec{max-width:1300px;margin:0 auto;padding:0 3rem;}
+.sec-lbl{font-size:9px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:1rem;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4.5vw,56px);font-weight:400;line-height:1.1;color:var(--navy);margin-bottom:1.5rem;}
+.sec-title em{font-style:italic;color:var(--terra);}
+.div{width:60px;height:1px;background:var(--gold);margin:0 0 2rem;}
+.div-c{margin:0 auto 2rem;}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .8s,transform .8s;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+
+/* ABOUT */
+#about{background:var(--cream);}
+.about-g{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.about-img-w{position:relative;}
+.about-img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;}
+.about-badge{position:absolute;bottom:-28px;right:-28px;width:148px;height:148px;background:var(--gold);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px;}
+.ab-num{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:600;color:var(--navy);line-height:1;}
+.ab-txt{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-top:4px;}
+.about-text p{font-size:15px;font-weight:300;line-height:1.9;color:var(--mid);margin-bottom:1.5rem;}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:2.5rem;}
+.stat{border-left:2px solid var(--gold);padding-left:14px;}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:500;color:var(--navy);line-height:1;}
+.stat-l{font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--mid);margin-top:3px;}
+
+/* ROOMS */
+#rooms{background:#fff;}
+.rooms-intro{text-align:center;max-width:640px;margin:0 auto 5rem;}
+.rooms-intro p{font-size:15px;font-weight:300;line-height:1.8;color:var(--mid);}
+.rooms-tabs{display:flex;justify-content:center;border-bottom:1px solid #e0ddd5;margin-bottom:4rem;}
+.rtab{font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--mid);padding:13px 26px;border:none;border-bottom:2px solid transparent;background:none;cursor:pointer;margin-bottom:-1px;transition:all .3s;}
+.rtab.on,.rtab:hover{color:var(--navy);border-bottom-color:var(--gold);}
+.rooms-sc{display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:start;}
+.rm-main{position:relative;overflow:hidden;aspect-ratio:4/3;cursor:pointer;}
+.rm-main img{width:100%;height:100%;object-fit:cover;transition:transform .6s;}
+.rm-main:hover img{transform:scale(1.04);}
+.rm-ov{position:absolute;bottom:0;left:0;right:0;padding:2rem;background:linear-gradient(to top,rgba(26,23,72,.95),transparent);}
+.rm-ov-name{font-family:'Cormorant Garamond',serif;font-size:26px;color:#fff;margin-bottom:6px;}
+.rm-ov-from{font-size:11px;color:rgba(255,255,255,.55);margin-bottom:4px;}
+.rm-ov-price{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold);}
+.rm-ov-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.rm-tag{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.3);padding:3px 8px;}
+.rms-list{display:flex;flex-direction:column;gap:14px;}
+.rm-card{display:flex;border:1px solid #e8e4dc;cursor:pointer;transition:all .3s;overflow:hidden;}
+.rm-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.09);transform:translateY(-2px);}
+.rm-card-img{width:120px;flex-shrink:0;overflow:hidden;}
+.rm-card-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.rm-card-body{padding:18px;flex:1;}
+.rm-card-name{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--navy);margin-bottom:5px;}
+.rm-card-desc{font-size:12px;color:var(--mid);line-height:1.6;margin-bottom:10px;}
+.rm-card-foot{display:flex;align-items:center;justify-content:space-between;}
+.rm-price{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--navy);}
+.rm-price span{font-size:11px;color:var(--mid);}
+.btn-sm{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--navy);border:1px solid var(--navy);padding:7px 14px;background:none;cursor:pointer;transition:all .3s;text-decoration:none;}
+.btn-sm:hover{background:var(--navy);color:#fff;}
+
+/* DINING */
+#dining{background:var(--dn);}
+.dining-g{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:4rem;}
+.d-card{position:relative;overflow:hidden;aspect-ratio:3/4;cursor:pointer;}
+.d-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s;display:block;}
+.d-card:hover img{transform:scale(1.05);}
+.d-ov{position:absolute;bottom:0;left:0;right:0;padding:1.75rem;background:linear-gradient(to top,rgba(26,23,72,.95),transparent);}
+.d-tag{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;display:block;}
+.d-name{font-family:'Cormorant Garamond',serif;font-size:24px;color:#fff;margin-bottom:6px;}
+.d-desc{font-size:12px;color:rgba(255,255,255,.65);line-height:1.6;}
+
+/* EXPERIENCES */
+#experiences{background:var(--cream);}
+.exp-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.exp-i{position:relative;overflow:hidden;aspect-ratio:1;cursor:pointer;}
+.exp-i:first-child{aspect-ratio:auto;grid-column:span 2;grid-row:span 2;}
+.exp-i img{width:100%;height:100%;object-fit:cover;transition:transform .6s;display:block;}
+.exp-i:hover img{transform:scale(1.07);}
+.exp-ov{position:absolute;bottom:0;left:0;right:0;padding:1.5rem 2rem;background:linear-gradient(to top,rgba(26,23,72,.92),transparent);}
+.exp-i:first-child .exp-ov{padding:3rem;}
+.exp-tag{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);}
+.exp-name{font-family:'Cormorant Garamond',serif;color:#fff;font-weight:400;}
+.exp-i:first-child .exp-name{font-size:34px;margin:6px 0 10px;}
+.exp-i:not(:first-child) .exp-name{font-size:20px;margin-top:4px;}
+.exp-desc{font-size:13px;font-weight:300;color:rgba(255,255,255,.7);line-height:1.6;}
+.exp-link{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);text-decoration:none;margin-top:14px;transition:gap .3s;}
+.exp-link:hover{gap:12px;}
+
+/* MEETINGS */
+#meetings{background:#fff;}
+.meet-g{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.meet-img{width:100%;aspect-ratio:5/4;object-fit:cover;display:block;}
+.meet-text p{font-size:14px;font-weight:300;line-height:1.9;color:var(--mid);margin-bottom:1.5rem;}
+.space-list{list-style:none;margin:2rem 0;}
+.space-list li{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid #f0ede8;font-size:13px;color:var(--ch);}
+.space-list li::before{content:'';width:22px;height:22px;background:var(--gold);border-radius:50%;flex-shrink:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23262262' stroke-width='2.5'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");background-size:13px;background-repeat:no-repeat;background-position:center;}
+.sp-det{margin-left:auto;font-size:11px;color:var(--mid);}
+
+/* LOCATION */
+#location{background:var(--navy);padding:100px 0;}
+.loc-g{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:2.5rem;}
+.loc-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;}
+.loc-text p{font-size:14px;font-weight:300;line-height:1.9;color:rgba(255,255,255,.7);margin-bottom:1.5rem;}
+.loc-details{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:2.5rem;}
+.loc-lbl{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:3px;}
+.loc-val{font-size:13px;color:rgba(255,255,255,.8);font-weight:300;}
+
+/* CONTACT */
+#contact{background:var(--cream);}
+.contact-g{display:grid;grid-template-columns:1fr 1fr;gap:80px;}
+.contact-text p{font-size:14px;font-weight:300;line-height:1.9;color:var(--mid);margin-bottom:1.5rem;}
+.c-items{margin-top:2rem;}
+.c-item{display:flex;gap:14px;align-items:flex-start;padding:18px 0;border-bottom:1px solid #e8e4dc;}
+.c-icon{width:40px;height:40px;flex-shrink:0;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.c-icon svg{width:16px;height:16px;stroke:var(--gold);fill:none;stroke-width:1.5;}
+.c-lbl{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.c-val{font-size:14px;color:var(--ch);font-weight:300;}
+.c-form{background:#fff;padding:2.5rem;}
+.c-form-title{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--navy);margin-bottom:1.75rem;}
+.fg{margin-bottom:18px;}
+.fg label{display:block;font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--navy);margin-bottom:6px;}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--cream);border:1px solid #ddd9d0;padding:11px 14px;font-family:'Jost',sans-serif;font-size:14px;color:var(--ch);outline:none;transition:border-color .3s;resize:none;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--navy);}
+.fg-r{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+/* FOOTER */
+footer{background:var(--dn);padding:80px 0 0;}
+.foot-inner{max-width:1300px;margin:0 auto;padding:0 3rem;}
+.foot-g{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;padding-bottom:56px;border-bottom:1px solid rgba(255,255,255,.1);}
+.foot-logo{display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;}
+.foot-logo-mark{width:42px;height:42px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--navy);}
+.foot-logo-name{font-family:'Cormorant Garamond',serif;font-size:17px;color:#fff;letter-spacing:3px;}
+.foot-brand p{font-size:12px;font-weight:300;line-height:1.9;color:rgba(255,255,255,.45);max-width:270px;margin-bottom:1.5rem;}
+.social-row{display:flex;gap:10px;}
+.soc-btn{width:34px;height:34px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;background:none;}
+.soc-btn:hover{border-color:var(--gold);background:rgba(248,188,26,.1);}
+.soc-btn svg{width:13px;height:13px;stroke:rgba(255,255,255,.5);fill:none;stroke-width:1.5;}
+.soc-btn:hover svg{stroke:var(--gold);}
+.foot-col h4{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;}
+.foot-col ul{list-style:none;}
+.foot-col ul li{margin-bottom:9px;}
+.foot-col ul li a{font-size:12px;font-weight:300;color:rgba(255,255,255,.5);text-decoration:none;transition:color .3s;}
+.foot-col ul li a:hover{color:var(--gold);}
+.foot-bottom{display:flex;align-items:center;justify-content:space-between;padding:22px 0;flex-wrap:wrap;gap:12px;}
+.foot-bottom p{font-size:10px;color:rgba(255,255,255,.25);}
+.foot-legal{display:flex;gap:20px;}
+.foot-legal a{font-size:10px;color:rgba(255,255,255,.25);text-decoration:none;transition:color .3s;}
+.foot-legal a:hover{color:rgba(255,255,255,.5);}
+
+@media(max-width:1024px){
+  .about-g,.meet-g,.contact-g,.loc-g{grid-template-columns:1fr;gap:48px;}
+  .about-badge{display:none;}
+  .rooms-sc,.dining-g{grid-template-columns:1fr;}
+  .d-card{aspect-ratio:16/9;}
+  .exp-g{grid-template-columns:1fr 1fr;}
+  .exp-i:first-child{grid-column:span 2;}
+  .foot-g{grid-template-columns:1fr 1fr;}
+  .rate-opts{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:768px){
+  nav{display:none;}
+  .hamburger{display:flex;}
+  header{padding:0 1.5rem;}
+  .sec{padding:0 1.5rem;}
+  section{padding:70px 0;}
+  .hero-ctas{flex-direction:column;gap:1rem;}
+  .exp-g{grid-template-columns:1fr;}
+  .exp-i:first-child{grid-column:span 1;}
+  .rd-bar{flex-direction:column;}
+  .rd-field{border-right:none;border-bottom:1px solid rgba(255,255,255,.08);}
+  .rd-view-btn{padding:18px;text-align:center;}
+  .rd-close-btn{display:none;}
+  .cal-wrap{flex-direction:column;}
+  .rate-opts{grid-template-columns:1fr;}
+  .fg-r{grid-template-columns:1fr;}
+  .foot-g{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" onclick="document.getElementById('mobMenu').classList.remove('open')">✕</button>
+  <a href="#about" onclick="document.getElementById('mobMenu').classList.remove('open')">About</a>
+  <a href="#rooms" onclick="document.getElementById('mobMenu').classList.remove('open')">Rooms</a>
+  <a href="#dining" onclick="document.getElementById('mobMenu').classList.remove('open')">Dining</a>
+  <a href="#experiences" onclick="document.getElementById('mobMenu').classList.remove('open')">Experiences</a>
+  <a href="#meetings" onclick="document.getElementById('mobMenu').classList.remove('open')">Meetings</a>
+  <a href="#contact" onclick="document.getElementById('mobMenu').classList.remove('open')">Contact</a>
+</div>
+
+<!-- HEADER -->
+<header id="hdr">
+  <a href="#" class="logo">
+    <div class="logo-mark">HB</div>
+    <div><span class="logo-name">HALA BISSAU</span><span class="logo-sub">Luxury Coastal Hotel</span></div>
+  </a>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#rooms">Rooms</a>
+    <a href="#dining">Dining</a>
+    <a href="#experiences">Experiences</a>
+    <a href="#meetings">Meetings</a>
+    <a href="#contact">Contact</a>
+    <span class="lang-sep">|</span>
+    <button class="lang-btn on" onclick="setL(this)">EN</button>
+    <span class="lang-sep">·</span>
+    <button class="lang-btn" onclick="setL(this)">PT</button>
+    <span class="lang-sep">·</span>
+    <button class="lang-btn" onclick="setL(this)">FR</button>
+    <button class="res-trigger" onclick="openDrawer()">Reserve</button>
+  </nav>
+  <button class="hamburger" onclick="document.getElementById('mobMenu').classList.add('open')">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- ══════════════════════════════════════════
+     RESERVATION DRAWER (Ritz-Carlton style)
+     Hidden. Slides down from top on Reserve click.
+══════════════════════════════════════════ -->
+<div class="res-backdrop" id="rdBackdrop" onclick="closeDrawer()"></div>
+<div class="res-drawer" id="resDrawer">
+
+  <!-- SUMMARY BAR -->
+  <div class="rd-bar">
+    <div class="rd-field" onclick="showPanel('dates')">
+      <div class="rd-label">Dates</div>
+      <div class="rd-val" id="rdDatesVal">12 Jun 2026 – 15 Jun 2026</div>
+      <div class="rd-sub" id="rdNightsVal">3 nights</div>
+    </div>
+    <div class="rd-field" onclick="showPanel('guests')">
+      <div class="rd-label">Guests</div>
+      <div class="rd-val" id="rdGuestsVal">2 Adults</div>
+      <div class="rd-sub" id="rdChildrenVal"></div>
+    </div>
+    <div class="rd-field" onclick="showPanel('rates')">
+      <div class="rd-label">Special Rates</div>
+      <div class="rd-val" id="rdRateVal">Lowest Regular Rate</div>
+      <div class="rd-sub" id="rdCodeVal"></div>
+    </div>
+    <button class="rd-view-btn" onclick="goToBooking()">View Rates</button>
+    <button class="rd-close-btn" onclick="closeDrawer()" title="Close">✕</button>
+  </div>
+
+  <!-- EXPANDABLE PANELS -->
+  <div class="rd-panels" id="rdPanels">
+
+    <!-- DATES — inline calendar -->
+    <div class="rd-panel" id="panel-dates">
+      <div class="rdp-inner">
+        <div class="rdp-title">Select Your Dates</div>
+        <div class="cal-wrap">
+          <div class="cal-month" id="calM1"></div>
+          <div class="cal-month" id="calM2"></div>
+          <div class="cal-summary">
+            <div class="cal-sum-row">
+              <span class="cal-sum-label">Check-in</span>
+              <span class="cal-sum-val" id="sumCI">—</span>
+            </div>
+            <div class="cal-sum-row">
+              <span class="cal-sum-label">Check-out</span>
+              <span class="cal-sum-val" id="sumCO">—</span>
+            </div>
+            <div class="cal-sum-row">
+              <span class="cal-sum-label">Nights</span>
+              <span class="cal-sum-val" id="sumNi">—</span>
+              <span class="cal-sum-sub" id="sumNiSub"></span>
+            </div>
+            <button class="cal-done" onclick="showPanel(null)">Apply Dates</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GUESTS -->
+    <div class="rd-panel" id="panel-guests">
+      <div class="rdp-inner">
+        <div class="rdp-title">Number of Guests</div>
+        <div class="guest-counters">
+          <div class="guest-row">
+            <div><div class="guest-info-lbl">Adults</div></div>
+            <div class="g-ctrl">
+              <button onclick="chG('a',-1)">−</button>
+              <span id="gA">2</span>
+              <button onclick="chG('a',1)">+</button>
+            </div>
+          </div>
+          <div class="guest-row">
+            <div><div class="guest-info-lbl">Children</div><div class="guest-info-sub">Under 12</div></div>
+            <div class="g-ctrl">
+              <button onclick="chG('c',-1)">−</button>
+              <span id="gC">0</span>
+              <button onclick="chG('c',1)">+</button>
+            </div>
+          </div>
+          <div class="guest-row">
+            <div><div class="guest-info-lbl">Infants</div><div class="guest-info-sub">Under 2</div></div>
+            <div class="g-ctrl">
+              <button onclick="chG('i',-1)">−</button>
+              <span id="gI">0</span>
+              <button onclick="chG('i',1)">+</button>
+            </div>
+          </div>
+        </div>
+        <button class="cal-done" style="margin-top:1.5rem;max-width:260px" onclick="showPanel(null)">Done</button>
+      </div>
+    </div>
+
+    <!-- RATES -->
+    <div class="rd-panel" id="panel-rates">
+      <div class="rdp-inner">
+        <div class="rdp-title">Select Rate Type</div>
+        <div class="rate-opts">
+          <label class="rate-opt"><input type="radio" name="rdRate" value="lowest" checked onchange="setRate(this)"><div class="rate-card"><div class="rate-card-name">Lowest Regular Rate</div><div class="rate-card-sub">Best available flexible rate</div></div></label>
+          <label class="rate-opt"><input type="radio" name="rdRate" value="special" onchange="setRate(this)"><div class="rate-card"><div class="rate-card-name">Special Rates</div><div class="rate-card-sub">Long stay &amp; exclusive plans</div></div></label>
+          <label class="rate-opt"><input type="radio" name="rdRate" value="points" onchange="setRate(this)"><div class="rate-card"><div class="rate-card-name">Special Rates / Points</div><div class="rate-card-sub">Hala Rewards loyalty plans</div></div></label>
+          <label class="rate-opt"><input type="radio" name="rdRate" value="govt" onchange="setRate(this)"><div class="rate-card"><div class="rate-card-name">Government &amp; Military</div><div class="rate-card-sub">Valid ID required at check-in</div></div></label>
+          <label class="rate-opt"><input type="radio" name="rdRate" value="corp" onchange="setRate(this)"><div class="rate-card"><div class="rate-card-name">Corp / Promo Code</div><div class="rate-card-sub">e.g. MMP · MF5 · CORP2025</div></div></label>
+          <label class="rate-opt"><input type="radio" name="rdRate" value="group" onchange="setRate(this)"><div class="rate-card"><div class="rate-card-name">Group Code</div><div class="rate-card-sub">10+ rooms · e.g. EG512E</div></div></label>
+        </div>
+        <div class="code-input-wrap" id="corpWrap">
+          <label>Corp ID / Promo Code</label>
+          <div class="code-input-row">
+            <input type="text" id="corpCode" placeholder="e.g. MMP · MF5 · CORP2025" maxlength="20">
+          </div>
+          <div class="code-hint">Enter your corporate ID or promotional code</div>
+        </div>
+        <div class="code-input-wrap" id="groupWrap">
+          <label>Group Code</label>
+          <div class="code-input-row">
+            <input type="text" id="groupCode" placeholder="e.g. EG512E" maxlength="20">
+          </div>
+          <div class="code-hint">Enter your group reservation code</div>
+        </div>
+        <button class="cal-done" style="margin-top:1.5rem;max-width:260px" onclick="showPanel(null)">Apply &amp; Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- END DRAWER -->
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Welcome to Guinea-Bissau's Finest Address</p>
+    <h1 class="hero-title"><em>Hala</em><br>Bissau</h1>
+    <p class="hero-sub">Where the Atlantic meets African elegance</p>
+    <div class="hero-ctas">
+      <button class="btn-p" onclick="openDrawer()">Reserve Your Stay</button>
+      <a href="#about" class="btn-o">Discover the Hotel</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Explore</span><div class="scroll-line"></div></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec">
+    <div class="about-g reveal">
+      <div class="about-img-w">
+        <img class="about-img" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=700&q=80" alt="Hala Bissau Hotel">
+        <div class="about-badge"><span class="ab-num">5★</span><span class="ab-txt">Luxury<br>Resort</span></div>
+      </div>
+      <div>
+        <span class="sec-lbl">Our Story</span>
+        <h2 class="sec-title">A New Era of <em>African Luxury</em></h2>
+        <div class="div"></div>
+        <p>Rising gracefully along Bissau's golden Atlantic coastline, Hala Bissau is Guinea-Bissau's first and most exceptional luxury hotel — where the warmth of West African hospitality meets world-class refinement.</p>
+        <p>Every detail has been curated to honour the rich cultural heritage of Guinea-Bissau: the rhythms of the Bijagós Archipelago, the colours of the Carnival, and the timeless beauty of the Atlantic sunsets.</p>
+        <p>Here, luxury is not a statement — it is a feeling. An unhurried, deeply personal experience crafted for those who demand the extraordinary.</p>
+        <div class="stats">
+          <div class="stat"><div class="stat-n">87</div><div class="stat-l">Suites &amp; Rooms</div></div>
+          <div class="stat"><div class="stat-n">5</div><div class="stat-l">Dining Venues</div></div>
+          <div class="stat"><div class="stat-n">1.2km</div><div class="stat-l">Private Beachfront</div></div>
+          <div class="stat"><div class="stat-n">24/7</div><div class="stat-l">Butler Service</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROOMS -->
+<section id="rooms">
+  <div class="sec">
+    <div class="rooms-intro reveal">
+      <span class="sec-lbl">Accommodations</span>
+      <h2 class="sec-title">Spaces of <em>Quiet Grandeur</em></h2>
+      <div class="div div-c"></div>
+      <p>Each of our 87 rooms and suites is a sanctuary of calm elegance, with hand-crafted African artisan pieces and sweeping Atlantic views.</p>
+    </div>
+    <div class="rooms-tabs">
+      <button class="rtab on" onclick="setTab(this)">Ocean Suites</button>
+      <button class="rtab" onclick="setTab(this)">Deluxe Rooms</button>
+      <button class="rtab" onclick="setTab(this)">Presidential</button>
+      <button class="rtab" onclick="setTab(this)">Garden Villas</button>
+    </div>
+    <div class="rooms-sc reveal">
+      <div class="rm-main">
+        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80" alt="Atlantic Ocean Suite">
+        <div class="rm-ov">
+          <div class="rm-ov-name">Atlantic Ocean Suite</div>
+          <div class="rm-ov-from">From</div>
+          <div class="rm-ov-price">$480 <span style="font-size:13px;color:rgba(255,255,255,.5)">/night</span></div>
+          <div class="rm-ov-tags"><span class="rm-tag">Ocean View</span><span class="rm-tag">King Bed</span><span class="rm-tag">85m²</span><span class="rm-tag">Private Terrace</span></div>
+        </div>
+      </div>
+      <div class="rms-list">
+        <div class="rm-card">
+          <div class="rm-card-img"><img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=300&q=80" alt="Bijagós Suite"></div>
+          <div class="rm-card-body"><div class="rm-card-name">Bijagós Suite</div><div class="rm-card-desc">Archipelago-inspired, panoramic sea views, hand-woven textiles and jacuzzi.</div><div class="rm-card-foot"><div class="rm-price">$650 <span>/night</span></div><button class="btn-sm" onclick="openDrawer()">Book</button></div></div>
+        </div>
+        <div class="rm-card">
+          <div class="rm-card-img"><img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300&q=80" alt="Sunset Suite"></div>
+          <div class="rm-card-body"><div class="rm-card-name">Sunset Horizon Suite</div><div class="rm-card-desc">Floor-to-ceiling windows framing West African sunsets, soaking tub.</div><div class="rm-card-foot"><div class="rm-price">$580 <span>/night</span></div><button class="btn-sm" onclick="openDrawer()">Book</button></div></div>
+        </div>
+        <div class="rm-card">
+          <div class="rm-card-img"><img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=300&q=80" alt="Presidential"></div>
+          <div class="rm-card-body"><div class="rm-card-name">Presidential Suite</div><div class="rm-card-desc">220m², private plunge pool, personal chef on request, 270° Atlantic panorama.</div><div class="rm-card-foot"><div class="rm-price">$1,200 <span>/night</span></div><button class="btn-sm" onclick="openDrawer()">Book</button></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DINING -->
+<section id="dining">
+  <div class="sec">
+    <div class="reveal" style="text-align:center;max-width:640px;margin:0 auto 1rem">
+      <span class="sec-lbl">Culinary Journeys</span>
+      <h2 class="sec-title" style="color:#fff">The Art of <em style="color:var(--gold)">Fine Dining</em></h2>
+      <div class="div div-c"></div>
+      <p style="font-size:14px;font-weight:300;line-height:1.9;color:rgba(255,255,255,.6)">Five distinct dining destinations celebrating Guinea-Bissau's rich coastal larder.</p>
+    </div>
+    <div class="dining-g reveal">
+      <div class="d-card"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Maré Alta"><div class="d-ov"><span class="d-tag">Signature Restaurant</span><div class="d-name">Maré Alta</div><div class="d-desc">Contemporary coastal cuisine — Atlantic seafood, fire and African spice in perfect harmony.</div></div></div>
+      <div class="d-card"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80" alt="Brisa do Mar"><div class="d-ov"><span class="d-tag">Pool Bar &amp; Grill</span><div class="d-name">Brisa do Mar</div><div class="d-desc">Relaxed poolside dining with tropical cocktails and grilled Atlantic specialities.</div></div></div>
+      <div class="d-card"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80" alt="Jardim Secreto"><div class="d-ov"><span class="d-tag">Garden Terrace</span><div class="d-name">Jardim Secreto</div><div class="d-desc">All-day dining beneath ancient palms, farm-to-table West African flavours.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCES -->
+<section id="experiences">
+  <div class="sec">
+    <div class="reveal" style="text-align:center;max-width:660px;margin:0 auto 5rem">
+      <span class="sec-lbl">Curated Experiences</span>
+      <h2 class="sec-title">Life, <em>Elevated</em></h2>
+      <div class="div div-c"></div>
+      <p style="font-size:15px;font-weight:300;line-height:1.8;color:var(--mid)">From the silence of our spa to the exhilaration of the Atlantic, every moment is designed to transcend the ordinary.</p>
+    </div>
+    <div class="exp-g reveal">
+      <div class="exp-i"><img src="https://images.unsplash.com/photo-1540541338537-f1582a5c4a41?w=800&q=80" alt="Infinity Pool"><div class="exp-ov"><div class="exp-tag">Pool &amp; Beach</div><div class="exp-name">Infinite Atlantic Horizon Pool</div><div class="exp-desc">Our 60-metre infinity pool merges with the ocean — butler service and private cabanas.</div><a href="#" class="exp-link">Discover More →</a></div></div>
+      <div class="exp-i"><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80" alt="Kora Spa"><div class="exp-ov"><div class="exp-tag">Wellness</div><div class="exp-name">Kora Spa &amp; Wellness</div></div></div>
+      <div class="exp-i"><img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=400&q=80" alt="Bijagós"><div class="exp-ov"><div class="exp-tag">Nature</div><div class="exp-name">Bijagós Archipelago</div></div></div>
+      <div class="exp-i"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80" alt="Fitness"><div class="exp-ov"><div class="exp-tag">Fitness</div><div class="exp-name">Performance Gym</div></div></div>
+      <div class="exp-i"><img src="https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=400&q=80" alt="Golf"><div class="exp-ov"><div class="exp-tag">Golf</div><div class="exp-name">Atlantic Golf Club</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MEETINGS -->
+<section id="meetings">
+  <div class="sec">
+    <div class="meet-g reveal">
+      <div>
+        <span class="sec-lbl">Meetings &amp; Events</span>
+        <h2 class="sec-title">Where Ideas <em>Take Flight</em></h2>
+        <div class="div"></div>
+        <div class="meet-text">
+          <p>Hala Bissau offers West Africa's most sophisticated event spaces — from intimate boardrooms to grand ballrooms — backed by flawless five-star service.</p>
+          <ul class="space-list">
+            <li>Grand Atlantic Ballroom — Up to 400 guests <span class="sp-det">1,200 m²</span></li>
+            <li>Bijagós Boardroom — Executive meetings <span class="sp-det">80 m²</span></li>
+            <li>Garden Pavilion — Outdoor events <span class="sp-det">500 m²</span></li>
+            <li>Salon Palmier — Intimate gatherings <span class="sp-det">120 m²</span></li>
+            <li>Rooftop Terrace — Cocktail receptions <span class="sp-det">300 m²</span></li>
+          </ul>
+          <a href="#contact" class="btn-p" style="display:inline-block;margin-top:1rem">Request Proposal</a>
+        </div>
+      </div>
+      <img class="meet-img" src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=700&q=80" alt="Meetings at Hala Bissau">
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <div class="sec">
+    <span class="sec-lbl">Find Us</span>
+    <h2 class="sec-title" style="color:#fff">The Heart of <em style="color:var(--gold)">Bissau</em></h2>
+    <div class="div"></div>
+    <div class="loc-g reveal">
+      <div class="loc-text">
+        <p>Ideally positioned on Bissau's exclusive Praia do Poilão waterfront, Hala Bissau places guests at the gateway to Guinea-Bissau's most spectacular destinations.</p>
+        <p>The Bijagós Archipelago — a UNESCO Biosphere Reserve — lies just 45 minutes by private boat.</p>
+        <div class="loc-details">
+          <div><span class="loc-lbl">Address</span><span class="loc-val">Praia do Poilão, Bissau, Guinea-Bissau</span></div>
+          <div><span class="loc-lbl">Airport</span><span class="loc-val">15 min · Osvaldo Vieira International</span></div>
+          <div><span class="loc-lbl">Bijagós Islands</span><span class="loc-val">45 min · Private boat</span></div>
+          <div><span class="loc-lbl">City Centre</span><span class="loc-val">10 min · Complimentary shuttle</span></div>
+        </div>
+      </div>
+      <img class="loc-img" src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=700&q=80" alt="Location">
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec">
+    <div class="contact-g reveal">
+      <div>
+        <span class="sec-lbl">Get in Touch</span>
+        <h2 class="sec-title">We Are <em>Here for You</em></h2>
+        <div class="div"></div>
+        <div class="contact-text"><p>Our guest relations team is available around the clock to assist with reservations, special requests, and to help craft your perfect experience.</p></div>
+        <div class="c-items">
+          <div class="c-item"><div class="c-icon"><svg viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div><div><div class="c-lbl">Reservations</div><div class="c-val">+245 321 456 789</div></div></div>
+          <div class="c-item"><div class="c-icon"><svg viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div><div><div class="c-lbl">Email</div><div class="c-val">reservations@halabissau.com</div></div></div>
+          <div class="c-item"><div class="c-icon"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div><div><div class="c-lbl">Address</div><div class="c-val">Praia do Poilão, Bissau, Guinea-Bissau</div></div></div>
+        </div>
+      </div>
+      <div class="c-form">
+        <div class="c-form-title">Send an Enquiry</div>
+        <div class="fg-r">
+          <div class="fg"><label>First Name</label><input type="text" placeholder="Your first name"></div>
+          <div class="fg"><label>Last Name</label><input type="text" placeholder="Your last name"></div>
+        </div>
+        <div class="fg"><label>Email Address</label><input type="email" placeholder="your@email.com"></div>
+        <div class="fg"><label>Subject</label><select><option>General Enquiry</option><option>Room Reservation</option><option>Meetings &amp; Events</option><option>Spa Enquiry</option></select></div>
+        <div class="fg"><label>Message</label><textarea rows="4" placeholder="How may we assist you?"></textarea></div>
+        <button class="btn-p" style="width:100%" onclick="subEnq(this)">Send Message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-g">
+      <div class="foot-brand">
+        <div class="foot-logo"><div class="foot-logo-mark">HB</div><span class="foot-logo-name">HALA BISSAU</span></div>
+        <p>Guinea-Bissau's premier luxury coastal hotel, where African elegance meets world-class hospitality on the shores of the Atlantic.</p>
+        <div class="social-row">
+          <button class="soc-btn"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></button>
+          <button class="soc-btn"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></button>
+          <button class="soc-btn"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M4 20L20 4"/></svg></button>
+        </div>
+      </div>
+      <div class="foot-col"><h4>The Hotel</h4><ul><li><a href="#about">Our Story</a></li><li><a href="#rooms">Rooms &amp; Suites</a></li><li><a href="#dining">Dining</a></li><li><a href="#experiences">Spa &amp; Wellness</a></li><li><a href="#meetings">Meetings &amp; Events</a></li></ul></div>
+      <div class="foot-col"><h4>Experiences</h4><ul><li><a href="#experiences">Kora Spa</a></li><li><a href="#experiences">Atlantic Golf</a></li><li><a href="#experiences">Bijagós Tours</a></li><li><a href="#experiences">Water Sports</a></li><li><a href="#experiences">Private Dining</a></li></ul></div>
+      <div class="foot-col"><h4>Contact</h4><ul><li><a href="tel:+245321456789">+245 321 456 789</a></li><li><a href="mailto:reservations@halabissau.com">reservations@halabissau.com</a></li><li><a href="#location">Praia do Poilão, Bissau</a></li><li><a href="#contact">Guest Relations</a></li><li><a href="#contact">Careers</a></li></ul></div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2025 Hala Bissau Hotel. All rights reserved.</p>
+      <div class="foot-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Cookie Policy</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+'use strict';
+// ── scroll reveal
+document.querySelectorAll('.reveal').forEach(el=>{
+  new IntersectionObserver(e=>{if(e[0].isIntersecting)el.classList.add('vis');},{threshold:.1}).observe(el);
+});
+// ── header scroll
+window.addEventListener('scroll',()=>document.getElementById('hdr').classList.toggle('scrolled',scrollY>80));
+// ── lang/tab
+function setL(b){document.querySelectorAll('.lang-btn').forEach(x=>x.classList.remove('on'));b.classList.add('on');}
+function setTab(b){document.querySelectorAll('.rtab').forEach(x=>x.classList.remove('on'));b.classList.add('on');}
+// ── contact
+function subEnq(btn){btn.textContent='✓ Message Sent';btn.style.background='#1a1748';setTimeout(()=>{btn.textContent='Send Message';btn.style.background='';},3000);}
+
+// ══════════════════════════════════════════
+//  RESERVATION DRAWER — state
+// ══════════════════════════════════════════
+const D={
+  ci:null,co:null,nights:0,
+  adults:2,children:0,infants:0,
+  rate:'lowest',rateLabel:'Lowest Regular Rate',
+  corp:'',group:'',
+  selectingCI:true, // true = next click sets CI, false = CO
+  activePanel:null,
+  viewYear:0,viewMonth:0
+};
+
+// ── Init default dates: today+1 and today+4
+(function(){
+  const t=new Date();
+  const ci=new Date(t);ci.setDate(t.getDate()+1);
+  const co=new Date(t);co.setDate(t.getDate()+4);
+  D.ci=ci;D.co=co;D.nights=3;D.selectingCI=false;
+  D.viewYear=ci.getFullYear();D.viewMonth=ci.getMonth();
+  updateSummaryBar();
+})();
+
+function openDrawer(){
+  document.getElementById('resDrawer').classList.add('open');
+  document.getElementById('rdBackdrop').classList.add('open');
+  showPanel('dates');
+}
+function closeDrawer(){
+  document.getElementById('resDrawer').classList.remove('open');
+  document.getElementById('rdBackdrop').classList.remove('open');
+  document.getElementById('rdPanels').classList.remove('open');
+  document.querySelectorAll('.rd-panel').forEach(p=>p.classList.remove('active'));
+  D.activePanel=null;
+}
+
+function showPanel(name){
+  const panels=document.getElementById('rdPanels');
+  if(!name||D.activePanel===name){
+    panels.classList.remove('open');
+    document.querySelectorAll('.rd-panel').forEach(p=>p.classList.remove('active'));
+    D.activePanel=null;
+    return;
+  }
+  document.querySelectorAll('.rd-panel').forEach(p=>p.classList.remove('active'));
+  const el=document.getElementById('panel-'+name);
+  if(el){
+    el.classList.add('active');
+    panels.classList.add('open');
+    D.activePanel=name;
+    if(name==='dates')buildCals();
+  }
+}
+
+// ══════════════════════════════════════════
+//  CALENDAR ENGINE
+// ══════════════════════════════════════════
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS=['Su','Mo','Tu','We','Th','Fr','Sa'];
+
+function buildCals(){
+  buildOneMonth('calM1',D.viewYear,D.viewMonth);
+  let ny=D.viewYear,nm=D.viewMonth+1;
+  if(nm>11){nm=0;ny++;}
+  buildOneMonth('calM2',ny,nm);
+}
+
+function buildOneMonth(elId,year,month){
+  const wrap=document.getElementById(elId);
+  const today=new Date();today.setHours(0,0,0,0);
+  const firstDay=new Date(year,month,1).getDay();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+
+  let html=`<div class="cal-head">
+    <button class="cal-nav" onclick="calNav(-1)">‹</button>
+    <span class="cal-month-title">${MONTHS[month]} ${year}</span>
+    <button class="cal-nav" onclick="calNav(1)">›</button>
+  </div>
+  <div class="cal-grid">`;
+
+  DAYS.forEach(d=>html+=`<div class="cal-dow">${d}</div>`);
+
+  for(let i=0;i<firstDay;i++)html+=`<div class="cal-day empty"></div>`;
+
+  for(let d=1;d<=daysInMonth;d++){
+    const dt=new Date(year,month,d);dt.setHours(0,0,0,0);
+    const isPast=dt<today;
+    const isCI=D.ci&&sameDay(dt,D.ci);
+    const isCO=D.co&&sameDay(dt,D.co);
+    const inRange=D.ci&&D.co&&dt>D.ci&&dt<D.co;
+    const isToday=sameDay(dt,today);
+    let cls='cal-day';
+    if(isPast)cls+=' past';
+    if(isCI)cls+=' checkin';
+    if(isCO)cls+=' checkout';
+    if(inRange)cls+=' in-range';
+    if(isToday&&!isCI&&!isCO)cls+=' today';
+    const ds=JSON.stringify({y:year,m:month,d:d});
+    html+=`<div class="${cls}" onclick='pickDay(${year},${month},${d})'>${d}</div>`;
+  }
+  html+='</div>';
+  wrap.innerHTML=html;
+}
+
+function sameDay(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate();}
+
+function calNav(dir){
+  D.viewMonth+=dir;
+  if(D.viewMonth<0){D.viewMonth=11;D.viewYear--;}
+  if(D.viewMonth>11){D.viewMonth=0;D.viewYear++;}
+  buildCals();
+}
+
+function pickDay(y,m,d){
+  const dt=new Date(y,m,d);dt.setHours(0,0,0,0);
+  const today=new Date();today.setHours(0,0,0,0);
+  if(dt<today)return;
+
+  if(D.selectingCI||!D.ci||(D.ci&&D.co&&dt<=D.ci)){
+    // Start fresh — set CI
+    D.ci=dt;D.co=null;D.nights=0;D.selectingCI=false;
+  } else {
+    // Set CO
+    if(dt<=D.ci){D.ci=dt;D.co=null;D.selectingCI=false;return;}
+    D.co=dt;
+    D.nights=Math.round((D.co-D.ci)/86400000);
+    D.selectingCI=true; // next pick resets
+    updateSummaryBar();
+  }
+  updateCalSummary();
+  buildCals();
+}
+
+function updateCalSummary(){
+  const fmt=d=>d?d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'—';
+  document.getElementById('sumCI').textContent=D.ci?fmt(D.ci):'Select check-in';
+  document.getElementById('sumCO').textContent=D.co?fmt(D.co):'Select check-out';
+  if(D.ci&&D.co&&D.nights>0){
+    document.getElementById('sumNi').textContent=D.nights;
+    document.getElementById('sumNiSub').textContent='night'+(D.nights>1?'s':'');
+  } else {
+    document.getElementById('sumNi').textContent=D.ci&&!D.co?'Select check-out':'—';
+    document.getElementById('sumNiSub').textContent='';
+  }
+}
+
+function updateSummaryBar(){
+  const fmt=d=>d?d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'—';
+  if(D.ci&&D.co){
+    document.getElementById('rdDatesVal').textContent=fmt(D.ci)+' – '+fmt(D.co);
+    document.getElementById('rdNightsVal').textContent=D.nights+' night'+(D.nights>1?'s':'');
+  } else {
+    document.getElementById('rdDatesVal').textContent='Select dates';
+    document.getElementById('rdNightsVal').textContent='';
+  }
+  const g=D.adults+' Adult'+(D.adults>1?'s':'');
+  document.getElementById('rdGuestsVal').textContent=g;
+  const cs=D.children>0?' + '+D.children+' Child'+(D.children>1?'ren':''):'';
+  const is=D.infants>0?' + '+D.infants+' Infant'+(D.infants>1?'s':''):'';
+  document.getElementById('rdChildrenVal').textContent=(cs+is).trim();
+  document.getElementById('rdRateVal').textContent=D.rateLabel;
+  const cc=(document.getElementById('corpCode')?.value||'').trim().toUpperCase();
+  const gc=(document.getElementById('groupCode')?.value||'').trim().toUpperCase();
+  let codeDisp='';
+  if(D.rate==='corp'&&cc)codeDisp=cc;
+  if(D.rate==='group'&&gc)codeDisp=gc;
+  document.getElementById('rdCodeVal').textContent=codeDisp;
+  updateCalSummary();
+}
+
+// ── Guest counters
+function chG(type,delta){
+  if(type==='a')D.adults=Math.max(1,Math.min(8,D.adults+delta));
+  else if(type==='c')D.children=Math.max(0,Math.min(6,D.children+delta));
+  else D.infants=Math.max(0,Math.min(4,D.infants+delta));
+  document.getElementById('gA').textContent=D.adults;
+  document.getElementById('gC').textContent=D.children;
+  document.getElementById('gI').textContent=D.infants;
+  updateSummaryBar();
+}
+
+// ── Rate type
+function setRate(r){
+  D.rate=r.value;
+  const l={lowest:'Lowest Regular Rate',special:'Special Rates',points:'Special Rates / Points',govt:'Government & Military',corp:'Corp / Promo Code',group:'Group Code'};
+  D.rateLabel=l[r.value]||r.value;
+  document.getElementById('corpWrap').classList.toggle('show',r.value==='corp');
+  document.getElementById('groupWrap').classList.toggle('show',r.value==='group');
+  updateSummaryBar();
+}
+
+// ── Go to booking
+function goToBooking(){
+  if(!D.ci||!D.co||D.nights<1){
+    alert('Please select check-in and check-out dates.');
+    showPanel('dates');return;
+  }
+  closeDrawer();
+  const toISO=d=>d.toISOString().split('T')[0];
+  const cc=(document.getElementById('corpCode')?.value||'').trim().toUpperCase();
+  const gc=(document.getElementById('groupCode')?.value||'').trim().toUpperCase();
+  const p=new URLSearchParams({ci:toISO(D.ci),co:toISO(D.co),nights:D.nights,adults:D.adults,children:D.children,infants:D.infants,ratetype:D.rate,corp:cc,group:gc});
+  window.location.href='hala-booking.html?'+p.toString();
+}
+</script>
+</body>
+</html>
